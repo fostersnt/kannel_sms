@@ -1,0 +1,64 @@
+##########################################################
+# Kannel Configuration File (Simple Working Example)
+# Place this at /etc/kannel/kannel.conf
+##########################################################
+
+# === CORE GROUP (bearerbox) ===
+group = core
+admin-port = 13000
+admin-password = bar
+status-password = foo
+admin-allow-ip = "127.0.0.1"
+smsbox-port = 13001
+log-file = "/var/log/kannel/bearerbox.log"
+log-level = 1
+box-deny-ip = "*.*.*.*"
+box-allow-ip = "127.0.0.1"
+
+# === SMSC CONNECTION (e.g., SMPP gateway or provider) ===
+group = smsc
+smsc = smpp
+host = smsc.example.com
+port = 2775
+smsc-username = myuser
+smsc-password = mypass
+system-type = ""
+transceiver-mode = 1
+log-level = 1
+throughput = 1
+keepalive = 60
+connect-allow-ip = "*.*.*.*"
+
+# === SMSBOX ===
+group = smsbox
+bearerbox-host = localhost
+log-file = "/var/log/kannel/smsbox.log"
+log-level = 1
+sendsms-port = 13013
+sendsms-chars = "0123456789 +"
+sendsms-allow-ip = "127.0.0.1"
+
+# === SENDSMS-USER (HTTP SMS sender auth) ===
+group = sendsms-user
+username = tester
+password = foobar
+#user-deny-ip = "*.*.*.*"
+user-allow-ip = "127.0.0.1"
+concatenation = true
+max-messages = 3
+
+# === AUTOMATIC REPLY SERVICES (handle incoming SMS / MO messages) ===
+group = sms-service
+keyword = default
+text = "Thank you for your message!"
+catch-all = yes
+max-messages = 1
+omit-empty = true
+
+# === SMSBOX ROUTING ===
+group = sms-service
+keyword = info
+accept-x-kannel-headers = yes
+max-messages = 1
+omit-empty = true
+get-url = "http://localhost:8080/incoming-sms?sender=%p&text=%b"
