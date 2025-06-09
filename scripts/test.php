@@ -5,5 +5,5 @@ $helper = new CustomHelper();
 
 $helper->logMessage("Hello world");
 
-echo __DIR__ . "\n";
-// echo $helper->getEnvData('DB') . "\n";
+// echo __DIR__ . "\n";
+echo $helper->getEnvData('DB') . "\n";
