@@ -1,0 +1,6 @@
+{
+    "require": {
+        "katzgrau/klogger": "dev-master",
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
